@@ -23,7 +23,7 @@ void main_loop(int serveur)
     while (1) {
         ready_sockets = current_sockets;
         if (select(FD_SETSIZE, &ready_sockets, NULL, NULL, NULL) < 0)
-            exit(EXIT_FAILURE);
+            exit(84);
         for (int i = 0; i < FD_SETSIZE; i++) {
             if (FD_ISSET(i, &ready_sockets)) {
                 if (i == serveur) {
