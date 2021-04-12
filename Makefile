@@ -6,7 +6,9 @@
 ##
 
 SRC			=	src/main.c			\
-				src/socketFunc.c	\
+				src/socket_func.c	\
+				src/select_client.c \
+				src/get_next_line.c \
 
 CFLAGS 	+=	-Wall -Wextra -I./include
 NAME 		= 	serveur
