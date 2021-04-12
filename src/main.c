@@ -39,7 +39,7 @@ int main(int ac, char **av)
     if (error_handling(ac))
         return 84;
 
-    serv = init_server(atoi(av[1]));
+    serv = init_server(atoi(av[1]), av[2]);
 
     main_loop(&serv);
 

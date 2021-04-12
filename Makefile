@@ -8,9 +8,12 @@
 SRC			=	src/main.c			\
 				src/socket_func.c	\
 				src/select_client.c \
+				src/client_list.c	\
 				src/get_next_line.c \
+				src/user_connection.c 	\
+				src/my_str_array.c 	\
 
-CFLAGS 	+=	-Wall -Wextra -I./include
+CFLAGS 	+=	-Wall -Wextra -I./include -g3
 NAME 		= 	serveur
 
 OBJ = $(SRC:.c=.o)
