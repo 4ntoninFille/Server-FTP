@@ -14,7 +14,7 @@ SRC			=	src/main.c			\
 				src/my_str_array.c 	\
 
 CFLAGS 	+=	-Wall -Wextra -I./include -g3
-NAME 		= 	serveur
+NAME 		= 	myftp
 
 OBJ = $(SRC:.c=.o)
 
