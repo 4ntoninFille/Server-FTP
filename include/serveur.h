@@ -75,5 +75,7 @@ void    pwd_command(client_node_t *client);
 void    pasv_command(serv_env_t *serv, client_node_t *client);
 void    stor_command(serv_env_t *serv, client_node_t *client);
 void    cwd_command(serv_env_t *serv, client_node_t *client, char **array);
+void    cdup_command(client_node_t *client);
+
 
 #endif
