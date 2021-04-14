@@ -6,16 +6,6 @@
 */
 
 #include "serveur.h"
-char *str_format(char *str)
-{
-    char *new = strdup(str);
-    for (int i = 0; new[i] != '\0'; i++) {
-        if (new[i] == '\r') {
-            new[i] = '\0';
-        }
-    }
-    return (new);
-}
 
 void user_connection(client_node_t *client, char *name)
 {
@@ -40,13 +30,29 @@ void  user_pass(client_node_t *client)
     write(client->fd, msg, strlen(msg));
 }
 
+void not_log(client_node_t *client)
+{
+    char msg[256] = "530 Not logged in.\r\n";
+    write(client->fd, msg, strlen(msg));
+}
+
 int user_connection_check(client_node_t *client, char **array)
 {
     if (strcmp(array[0], "USER") == 0 && array[1]) { 
         user_connection(client, array[1]);
-        return (0);
-    } else if (strcmp(array[0], "PASS") == 0) {
-        user_pass(client);
+        return (-1);
     }
-    return (0);
+    if (!client->name) {
+        not_log(client);
+        return (-1);
+    } 
+    if (strcmp(array[0], "PASS") == 0) {
+        user_pass(client);
+        return (-1);
+    }
+    if (!client->pass) {
+        not_log(client);
+        return (-1);
+    }
+    return (1);
 }

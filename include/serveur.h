@@ -21,11 +21,19 @@
 #include <sys/time.h>
 
 #include <netinet/in.h>
+#include <arpa/inet.h>
+
+typedef enum {
+    NONE,
+    PASSIVE,
+    ACTIVE
+} data_mode_t;
 
 typedef struct client_node_s
 {
     int     fd;
     int     pass;
+    int     fd_transfer;
 
     char    *pwd;
     char     *name;
@@ -33,14 +41,15 @@ typedef struct client_node_s
     struct client_node_s *next;
 } client_node_t;
 
-
 typedef struct serv_env_s 
 {
-    int              serveur_fd;
-    char            *origin_path;
+    int                 serveur_fd;
+    data_mode_t         data_mode;
+    char                *origin_path;
 
-    client_node_t   *list_client;
-    fd_set          *current_sockets;
+    struct sockaddr_in  serv_adrr;
+    client_node_t       *list_client;
+    fd_set              *current_sockets;
 } serv_env_t;
 
 void            push_back_client(serv_env_t *serv, int fd);
@@ -48,13 +57,18 @@ void            pop_client(serv_env_t *serv, int fd);
 void            print_list(serv_env_t *serv);
 client_node_t*  find_client(serv_env_t *serv, int fd);
 
-void accept_connection(serv_env_t *serv, fd_set *curr_sockets);
-void client_selection(serv_env_t *serveur, int fd_client);
-serv_env_t init_server(int port, char *origine_path);
+void        accept_connection(serv_env_t *serv, fd_set *curr_sockets);
+void        client_selection(serv_env_t *serveur, int fd_client);
+serv_env_t  init_server(int port, char *origine_path);
 
+char*   str_format(char *str);
 char**  my_str_array(char *str);
 void    free_array(char **array);
 
 int     user_connection_check(client_node_t *client, char **array);
+
+void    quit_command(client_node_t *client, char **array, char *command);
+void    pasv_command(serv_env_t *serv, client_node_t *client);
+void    stor_command(serv_env_t *serv, client_node_t *client);
 
 #endif

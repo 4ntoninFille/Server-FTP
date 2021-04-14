@@ -18,7 +18,7 @@ void clean_over_tab(char **array, size_t i, char *str)
 char **my_str_array(char *str)
 {
     int index_tab = 0, index_str = 0;
-    if (str[0] == 13) return NULL;
+    if (str[0] == '\0' || strlen(str) == 1) return NULL;
     char **array = malloc(sizeof(char *) * strlen(str) + 1);
     for (size_t i = 0; i < strlen(str); i++) {
         array[i] = malloc(sizeof(char) * strlen(str) + 1);

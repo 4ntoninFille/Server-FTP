@@ -24,6 +24,7 @@ serv_env_t init_server(int port, char *origine_path)
     serv_env_t serv;
     struct sockaddr_in myaddr;
     serv.list_client = NULL;
+    serv.data_mode = NONE;
     serv.origin_path = origine_path;
     if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         printf("erreur socket\n"); exit(84);
@@ -36,6 +37,7 @@ serv_env_t init_server(int port, char *origine_path)
         printf("erreur bind\n"); close(fd); exit(84);
     }
     serv.serveur_fd = fd;
+    serv.serv_adrr = myaddr;
     listen(fd, 100);
     return (serv);
 }
