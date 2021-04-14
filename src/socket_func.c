@@ -18,14 +18,20 @@ void accept_connection(serv_env_t *serv, fd_set *current_sockets)
     write(client, msg, sizeof(msg));
 }
 
+void serv_init(serv_env_t *serv, char *origine_path)
+{
+    serv->list_client = NULL;
+    serv->data_mode = NONE;
+    serv->origin_path = origine_path;
+    serv->serveur_fd = 0;
+}
+
 serv_env_t init_server(int port, char *origine_path)
 {
     int fd = 0;
     serv_env_t serv;
     struct sockaddr_in myaddr;
-    serv.list_client = NULL;
-    serv.data_mode = NONE;
-    serv.origin_path = origine_path;
+    serv_init(&serv, origine_path);
     if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         printf("erreur socket\n"); exit(84);
     }

@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <dirent.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -68,7 +69,11 @@ void    free_array(char **array);
 int     user_connection_check(client_node_t *client, char **array);
 
 void    quit_command(client_node_t *client, char **array, char *command);
+void    noop_command(int fd);
+void    help_command(int fd);
+void    pwd_command(client_node_t *client);
 void    pasv_command(serv_env_t *serv, client_node_t *client);
 void    stor_command(serv_env_t *serv, client_node_t *client);
+void    cwd_command(serv_env_t *serv, client_node_t *client, char **array);
 
 #endif

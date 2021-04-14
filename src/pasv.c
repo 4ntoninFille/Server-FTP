@@ -47,7 +47,6 @@ int init_data_transfer(client_node_t *client, const char *ip)
 
 void pasv_command(serv_env_t *serv, client_node_t *client)
 {
-    int pid = 0;
     struct sockaddr_in* pV4Addr = (struct sockaddr_in*)&serv->serv_adrr;
     struct in_addr ipAddr = pV4Addr->sin_addr;
     char ip_str[INET_ADDRSTRLEN];

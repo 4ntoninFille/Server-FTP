@@ -9,5 +9,6 @@
 
 void stor_command(serv_env_t *serv, client_node_t *client)
 {
-
+    (void)serv;
+    (void)client;
 }

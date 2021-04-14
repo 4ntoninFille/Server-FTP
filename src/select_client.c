@@ -18,10 +18,17 @@ char *str_format(char *str)
     return (new);
 }
 
-void noop_command(int fd)
+void commands_list(serv_env_t *serv, client_node_t *client, char **array)
 {
-    char msg[256] = "200 Command okay.\r\n";
-    write(fd, msg, strlen(msg));
+    if (strcmp(array[0], "NOOP") == 0) noop_command(client->fd);
+    else if (strcmp(array[0], "PASV") == 0) pasv_command(serv, client);
+    else if (strcmp(array[0], "STOR") == 0) stor_command(serv, client);
+    else if (strcmp(array[0], "PWD") == 0) pwd_command(client);
+    else if (strcmp(array[0], "HELP") == 0) help_command(client->fd);
+    else if (strcmp(array[0], "CWD") == 0) cwd_command(serv, client, array);
+    else {
+        dprintf(client->fd, "500 Unknown command.\r\n");
+    }
 }
 
 int client_command(serv_env_t *serv, client_node_t *client, char *command)
@@ -33,15 +40,10 @@ int client_command(serv_env_t *serv, client_node_t *client, char *command)
         quit_command(client, array, format_command);
         return (-1);
     }
-    if (array && user_connection_check(client, array) > 0) {
-        if (strcmp(array[0], "NOOP") == 0) noop_command(client->fd);
-        else if (strcmp(array[0], "PASV") == 0) pasv_command(serv, client);
-        else if (strcmp(array[0], "STOR") == 0) stor_command(serv, client);
-        else {
-            write(client->fd, "500 Unknown command.\r\n",
-            sizeof("500 Unknown command.\r\n"));
-        }
-    }
+
+    if (array && user_connection_check(client, array) > 0)
+        commands_list(serv, client, array);
+
     free(format_command);
     free_array(array);
     return (0);
