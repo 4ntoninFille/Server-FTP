@@ -15,6 +15,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
+#include <signal.h>
+
+#include <sys/mman.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -34,10 +37,11 @@ typedef struct client_node_s
 {
     int     fd;
     int     pass;
-    int     fd_transfer;
+    int     *fd_transfer;
+    int     data_on;
 
     char    *pwd;
-    char     *name;
+    char    *name;
 
     struct client_node_s *next;
 } client_node_t;
@@ -68,6 +72,8 @@ void    free_array(char **array);
 
 int     user_connection_check(client_node_t *client, char **array);
 
+void    data_transfer(client_node_t *client, int fd_listner);
+
 void    quit_command(client_node_t *client, char **array, char *command);
 void    noop_command(int fd);
 void    help_command(int fd);
@@ -76,6 +82,7 @@ void    pasv_command(serv_env_t *serv, client_node_t *client);
 void    stor_command(serv_env_t *serv, client_node_t *client);
 void    cwd_command(serv_env_t *serv, client_node_t *client, char **array);
 void    cdup_command(client_node_t *client);
+void    list_command(client_node_t *client);
 
 
 #endif

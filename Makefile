@@ -13,6 +13,7 @@ SRC			=	src/main.c		\
 				src/get_next_line.c 	\
 				src/user_connection.c 	\
 				src/my_str_array.c 	\
+				src/data_pasv.c		\
 				src/pasv.c		\
 				src/stor.c		\
 				src/pwd.c		\
@@ -20,6 +21,7 @@ SRC			=	src/main.c		\
 				src/help.c		\
 				src/cwd.c		\
 				src/cdup.c		\
+				src/list.c		\
 
 CFLAGS 	+=	-Wall -Wextra -I./include -g3
 NAME 		= 	myftp

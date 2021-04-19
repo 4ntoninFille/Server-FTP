@@ -12,12 +12,12 @@ void push_back_client(serv_env_t *serv, int fd)
     client_node_t *new = malloc(sizeof(client_node_t));
     client_node_t *tmp = serv->list_client;
     new->fd = fd;
-    new->fd_transfer = -1;
+    new->fd_transfer = NULL;
     new->pwd = strdup("/");
     new->name = NULL;
     new->pass = 0;
     new->next = NULL;
-
+    new->data_on = 0;
     if (!tmp) {
         serv->list_client = new;
         return;
