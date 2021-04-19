@@ -7,11 +7,21 @@
 
 #include "serveur.h"
 
-int error_handling(int ac)
+int error_handling(int ac, char **av)
 {
+    int err = 0;
+    DIR *dir;
+
     if (ac != 3)
-        return 1;
-    return 0;
+        err = 1;
+    if (av[2]) {
+        dir = opendir(av[2]);
+        if (!dir) {
+            err = 1;
+        }
+        closedir(dir);
+    }
+    return err;
 }
 
 void main_loop(serv_env_t *serv)
@@ -36,7 +46,7 @@ int main(int ac, char **av)
 {
     serv_env_t serv;
 
-    if (error_handling(ac))
+    if (error_handling(ac, av))
         return 84;
 
     serv = init_server(atoi(av[1]), av[2]);
