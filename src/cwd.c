@@ -29,6 +29,15 @@ char *format_path(char *path)
     return (new);
 }
 
+int cwd_back(client_node_t *client, char *path)
+{
+    if (strcmp(path, "..") == 0) {
+        cdup_command(client);
+        return (1);
+    }
+    return (0);
+}
+
 void cwd_command(serv_env_t *serv, client_node_t *client, char **array)
 {
     (void)serv;
@@ -36,15 +45,15 @@ void cwd_command(serv_env_t *serv, client_node_t *client, char **array)
     char *new_path = NULL;
     if (!array[1]) return;
     char *form_path = format_path(array[1]);
+    if (cwd_back(client, form_path)) return;
     if (strlen(client->pwd) == 1) first = 1;
     new_path = malloc(sizeof(char) * (strlen(form_path) + 
                                         strlen(client->pwd) +
                                         first));
     memset(new_path, 0, strlen(form_path) + strlen(client->pwd) + first);
     new_path = strcat(new_path, client->pwd);
-    if (first == 2) {
+    if (first == 2)
         new_path = strcat(new_path, "/");
-    }
     new_path = strcat(new_path, form_path);
     free(client->pwd);
     free(form_path);
