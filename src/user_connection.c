@@ -21,9 +21,8 @@ void user_connection(client_node_t *client, char *name)
 void  user_pass(client_node_t *client)
 {
     char msg[256] = "230 User logged in, proceed.\r\n";
-    char msg2[256] = "332 Need account for login.\r\n";
-    if (!client->name) {
-        write(client->fd, msg2, strlen(msg2));
+    if (!client->name || strcmp(client->name, "Anonymous") != 0) {
+        dprintf(client->fd, "530 Login incorrect.\r\n");
         return;
     }
     client->pass = 1;
