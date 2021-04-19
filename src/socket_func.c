@@ -9,13 +9,12 @@
 
 void accept_connection(serv_env_t *serv, fd_set *current_sockets)
 {
-    char msg[256] = "220 Service ready for new user.\r\n";
     int client = accept(serv->serveur_fd, NULL, NULL);
 
     push_back_client(serv, client);
 
     FD_SET(client, current_sockets);
-    write(client, msg, sizeof(msg));
+    dprintf(client, "220 Service ready for new user.\r\n");
 }
 
 void serv_init(serv_env_t *serv, char *origine_path)
