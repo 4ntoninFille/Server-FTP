@@ -37,7 +37,10 @@ typedef struct client_node_s
 {
     int     fd;
     int     pass;
+
     int     *fd_transfer;
+    int     *type_transfer;
+    char    *arg_transfer;
     int     data_on;
 
     char    *pwd;
@@ -49,7 +52,6 @@ typedef struct client_node_s
 typedef struct serv_env_s 
 {
     int                 serveur_fd;
-    data_mode_t         data_mode;
     char                *origin_path;
 
     struct sockaddr_in  serv_adrr;
@@ -72,7 +74,8 @@ void    free_array(char **array);
 
 int     user_connection_check(client_node_t *client, char **array);
 
-void    data_transfer(client_node_t *client, int fd_listner);
+void    data_transfer(serv_env_t *serv,
+                        client_node_t *client, int fd_listner);
 
 void    quit_command(client_node_t *client, char **array, char *command);
 void    noop_command(int fd);
@@ -82,7 +85,9 @@ void    pasv_command(serv_env_t *serv, client_node_t *client);
 void    stor_command(serv_env_t *serv, client_node_t *client);
 void    cwd_command(serv_env_t *serv, client_node_t *client, char **array);
 void    cdup_command(client_node_t *client);
-void    list_command(client_node_t *client);
+
+void    list_command(client_node_t *client, char **array);
+void    list_call(serv_env_t *serv, client_node_t *client);
 
 
 #endif

@@ -34,7 +34,7 @@ int init_adresse(struct sockaddr_in *myaddr, int fd)
     return (port);
 }
 
-int init_data_transfer(client_node_t *client, const char *ip)
+int init_data_transfer(serv_env_t *serv, client_node_t *client, const char *ip)
 {
     int fd = 0, port = 0;
     char *format_ip = NULL;
@@ -49,7 +49,7 @@ int init_data_transfer(client_node_t *client, const char *ip)
     format_ip = ip_format(ip);
     dprintf(client->fd, "227 Entering Passive Mode (%s,%d,%d)\r\n",
             format_ip, port / 256, port % 256);
-    data_transfer(client, fd);
+    data_transfer(serv, client, fd);
     free(format_ip);
     return (fd);
 }
@@ -61,8 +61,7 @@ void pasv_command(serv_env_t *serv, client_node_t *client)
     char ip_str[INET_ADDRSTRLEN];
     inet_ntop( AF_INET, &ipAddr, ip_str, INET_ADDRSTRLEN );
 
-    init_data_transfer(client, ip_str);
+    init_data_transfer(serv, client, ip_str);
 
-    serv->data_mode = PASSIVE;
     client->data_on = 1;
 }

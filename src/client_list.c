@@ -13,6 +13,8 @@ void push_back_client(serv_env_t *serv, int fd)
     client_node_t *tmp = serv->list_client;
     new->fd = fd;
     new->fd_transfer = NULL;
+    new->type_transfer = NULL;
+    new->arg_transfer = NULL;
     new->pwd = strdup("/");
     new->name = NULL;
     new->pass = 0;
@@ -22,10 +24,8 @@ void push_back_client(serv_env_t *serv, int fd)
         serv->list_client = new;
         return;
     }
-
-    while(tmp->next) {
+    while(tmp->next)
         tmp = tmp->next;
-    }
     tmp->next = new;
 }
 

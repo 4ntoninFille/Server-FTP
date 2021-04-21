@@ -20,7 +20,6 @@ void accept_connection(serv_env_t *serv, fd_set *current_sockets)
 void serv_init(serv_env_t *serv, char *origine_path)
 {
     serv->list_client = NULL;
-    serv->data_mode = NONE;
     serv->origin_path = origine_path;
     serv->serveur_fd = 0;
 }
