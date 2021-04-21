@@ -22,6 +22,7 @@ SRC			=	src/main.c		\
 				src/cwd.c		\
 				src/cdup.c		\
 				src/list.c		\
+				src/dele.c		\
 
 CFLAGS 	+=	-Wall -Wextra -I./include -g3
 NAME 		= 	myftp
