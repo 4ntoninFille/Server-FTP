@@ -20,16 +20,22 @@ char *str_format(char *str)
 
 void commands_list(serv_env_t *serv, client_node_t *client, char **array)
 {
-    if (strcmp(array[0], "NOOP") == 0) noop_command(client->fd);
-    else if (strcmp(array[0], "PASV") == 0) pasv_command(serv, client);
-    else if (strcmp(array[0], "STOR") == 0) stor_command(serv, client);
-    else if (strcmp(array[0], "PWD") == 0) pwd_command(client);
-    else if (strcmp(array[0], "HELP") == 0) help_command(client->fd);
-    else if (strcmp(array[0], "CWD") == 0) cwd_command(serv, client, array);
-    else if (strcmp(array[0], "CDUP") == 0) cdup_command(client);
-    else if (strcmp(array[0], "DELE") == 0) dele_command(serv, client, array);
-    else if (strcmp(array[0], "LIST") == 0) list_command(client, array);
-    else {
+    int no = 0;
+    if (strcmp(array[0], "NOOP") == 0) {noop_command(client->fd); no = 1;}
+    if (strcmp(array[0], "PASV") == 0) {pasv_command(serv, client); no = 1;}
+    if (strcmp(array[0], "STOR") == 0) {stor_command(serv, client); no = 1;}
+    if (strcmp(array[0], "PWD") == 0) {pwd_command(client); no = 1;}
+    if (strcmp(array[0], "HELP") == 0) {help_command(client->fd); no = 1;}
+    if (strcmp(array[0], "CWD") == 0) {
+        cwd_command(serv, client, array); no = 1;
+    }
+    if (strcmp(array[0], "CDUP") == 0) {cdup_command(client); no = 1;}
+    if (strcmp(array[0], "DELE") == 0) {
+        dele_command(serv, client, array); no = 1;
+    }
+    if (strcmp(array[0], "LIST") == 0) {list_command(client, array); no = 1;}
+    
+    if (!no) {
         dprintf(client->fd, "500 Unknown command.\r\n");
     }
 }

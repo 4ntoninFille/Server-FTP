@@ -36,7 +36,7 @@ char *create_command(serv_env_t *serv, client_node_t *client)
     char *cmd = malloc(sizeof(char) * (len));
 
     memset(cmd, 0, len);
-    
+
     cmd = strcat(cmd, ls);
     cmd = strcat(cmd, " ");
     cmd = strcat(cmd, serv->origin_path);

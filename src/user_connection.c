@@ -37,14 +37,14 @@ void not_log(client_node_t *client)
 
 int user_connection_check(client_node_t *client, char **array)
 {
-    if (strcmp(array[0], "USER") == 0 && array[1]) { 
+    if (strcmp(array[0], "USER") == 0 && array[1]) {
         user_connection(client, array[1]);
         return (-1);
     }
     if (!client->name) {
         not_log(client);
         return (-1);
-    } 
+    }
     if (strcmp(array[0], "PASS") == 0) {
         user_pass(client);
         return (-1);

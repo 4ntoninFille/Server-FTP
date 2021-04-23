@@ -49,7 +49,7 @@ typedef struct client_node_s
     struct client_node_s *next;
 } client_node_t;
 
-typedef struct serv_env_s 
+typedef struct serv_env_s
 {
     int                 serveur_fd;
     char                *origin_path;
