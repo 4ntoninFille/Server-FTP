@@ -30,11 +30,11 @@ void dele_command(serv_env_t *serv, client_node_t *client, char **array)
 
     if (array[1]) {
         cmd = create_command_dele(serv, client, array[1]);
-        
+
         if (remove(cmd) < 0) {
             dprintf(client->fd, "550 Requested action not taken.\r\n");
         } else {
-            dprintf(client->fd, 
+            dprintf(client->fd,
             "250 Requested file action okay, completed.\r\n");
         }
     }

@@ -21,6 +21,10 @@ void call_command(serv_env_t *serv, client_node_t *client)
     if (*client->type_transfer == 1) {
         list_call(serv, client);
     }
+
+    if (*client->type_transfer == 2) {
+        retr_call(serv, client);
+    }
 }
 
 void data_transfer(serv_env_t *serv, client_node_t *client, int fd_listner)

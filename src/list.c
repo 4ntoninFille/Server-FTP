@@ -54,7 +54,7 @@ void list_call(serv_env_t *serv, client_node_t *client)
 
     fd_cmd = command_run(cmd);
     send_to_client(client, fd_cmd);
-
+    free(cmd);
     dprintf(client->fd,
         "150 File status okay; about to open data connection.\r\n");
 }

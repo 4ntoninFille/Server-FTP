@@ -16,6 +16,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <signal.h>
+#include <fcntl.h>
 
 #include <sys/mman.h>
 
@@ -62,14 +63,14 @@ typedef struct serv_env_s
 void            push_back_client(serv_env_t *serv, int fd);
 void            pop_client(serv_env_t *serv, int fd);
 void            print_list(serv_env_t *serv);
-client_node_t*  find_client(serv_env_t *serv, int fd);
+client_node_t   *find_client(serv_env_t *serv, int fd);
 
 void        accept_connection(serv_env_t *serv, fd_set *curr_sockets);
 void        client_selection(serv_env_t *serveur, int fd_client);
 serv_env_t  init_server(int port, char *origine_path);
 
-char*   str_format(char *str);
-char**  my_str_array(char *str);
+char    *str_format(char *str);
+char    **my_str_array(char *str);
 void    free_array(char **array);
 
 int     user_connection_check(client_node_t *client, char **array);
@@ -90,5 +91,10 @@ void    dele_command(serv_env_t *serv, client_node_t *client, char **array);
 void    list_command(client_node_t *client, char **array);
 void    list_call(serv_env_t *serv, client_node_t *client);
 
+void    retr_command(client_node_t *client, char **array);
+void    retr_call(serv_env_t *serv, client_node_t *client);
+
+char    *create_origin_path_retr(serv_env_t *serv, client_node_t *client);
+char    *create_origin_path(serv_env_t *serv, char *path);
 
 #endif

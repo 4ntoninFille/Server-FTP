@@ -34,10 +34,10 @@ void commands_list(serv_env_t *serv, client_node_t *client, char **array)
         dele_command(serv, client, array); no = 1;
     }
     if (strcmp(array[0], "LIST") == 0) {list_command(client, array); no = 1;}
-    
-    if (!no) {
+    if (strcmp(array[0], "RETR") == 0) {retr_command(client, array); no = 1;}
+
+    if (!no)
         dprintf(client->fd, "500 Unknown command.\r\n");
-    }
 }
 
 int client_command(serv_env_t *serv, client_node_t *client, char *command)
